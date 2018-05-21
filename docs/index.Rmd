@@ -1,0 +1,89 @@
+---
+title: "Three-Day R Workshop"
+author: "Randi L. Garcia"
+date: "July 17, 19, & 21, 2017"
+output:
+  html_document:
+    highlight: pygments
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+fontsize: 12 pt
+---
+
+ > Workshop location: Bass 204. Please bring your laptop.
+
+***
+
+#Schedule
+
+##[Day 1: Introduction to R](Day 1 Slides.pdf)
+
+  + Morning Session 9-12
+    - Downloading [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/products/rstudio/download/)
+    - [Intro to the RStudio environment, packages, and RMarkdown](Intro_to_R.html)
+    - [Data Manipulation and descriptive statistics with `dplyr`](Intro_to_dplyr.html)
+  + Lunch 12:00 PM to 1:15 PM 
+  + Afternoon Session 1:15-3:30
+    - [Making Figures with `ggplot2`](Intro_to_ggplot2.html)
+    - [Correlations, Reliability Test, and t-Tests](Corr_reliability_ttest.html)
+  + Resources for more practice
+    - [`dplyr` lab](https://beanumber.github.io/sds192/lab-single_table.html)
+    - [`dplyr` lab 2](https://beanumber.github.io/sds192/lab-group_by.html)
+    - [`dplyr` lab 3](https://beanumber.github.io/sds192/lab-join.html)
+    - [`ggplot` lab](https://beanumber.github.io/sds192/lab-ggplot2.html)
+    - [`ggplot` colors lab](https://beanumber.github.io/sds192/lab-colorbrewer-ggthemes.html)
+
+***
+
+##[Day 2: Data Analysis in R](Day 2 Slides.pdf)
+
+  + Morning Session 9-12
+    - [ANOVA, Regression, and Logistic regression](ANOVA_and_regression.html)
+    - Preparing [APA style manuscripts](Papaja.pdf) in R Markdown with `papaja`
+  + Lunch 12:00 PM to 1:15 PM  
+  + Afternoon Session 1:15-3:30
+    - [Exploratory Factor Analysis (EFA)](Exploratory_Factor_Analysis.html)
+    - [Confirmatory Factor Analysis (CFA) and SEM with `laavan`](Confirmatory_Factor_Analysis_and_SEM.html)
+  + Resources for more practice
+    - [Factor Analysis with `psych`](factor.pdf)
+    - [`lavaan` tutorials](http://lavaan.ugent.be/tutorial/)
+
+***
+
+##[Day 3: Multilevel Modeling in R](Day 3 Slides.pdf)
+
+  + Morning Session 9-12
+    - [Multilevel Modeling with `lme4`](Multilevel_Modeling.html)
+    - [Data Manipulation with `tidyr`](Data_manipulation_with_tidyr.html)
+    - [Dyadic Data Analysis with `nlme` and `dyadr`](Dyadic_Data_Analysis.html)
+  + Lunch 12:00 PM to 1:15 PM  
+  + Afternoon Session 1:15-3:30
+    - [Generalized Linear Mixed Models](Generalized_Linear_Mixed_Models.html)
+    - [Individual and Dyadic Growth Curve Modeling](Growth_Curve_Modeling.html)
+  + Resources for more practice
+    - [`tidyr` lab 4](https://beanumber.github.io/sds192/lab-tidy.html)
+    - [Week long Dyadic Workshop](https://randilgarcia.github.io/week-dyad-workshop/)
+    - [Guide to `lme4` versus `nlme`](http://rpsychologist.com/r-guide-longitudinal-lme-lmer)
+    - [ItoP](https://davidakenny.shinyapps.io/ItoP/)
+    - [dyadr gitHub](https://github.com/RandiLGarcia/dyadr)
+
+
+
+***
+
+#Cheatsheets, R Tutorials, and Books
+
+  + [dplyr cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+  + [ggplot2 cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)
+  + [RMarkdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)  
+    - [Advanced RMarkdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html)
+  + [ggplot2 book by Hadley Wickham](http://ms.mcmaster.ca/~bolker/misc/ggplot2-book.pdf)
+  + [R for Data Science by Garrett Grolemund](http://r4ds.had.co.nz/index.html)
+
+
+
