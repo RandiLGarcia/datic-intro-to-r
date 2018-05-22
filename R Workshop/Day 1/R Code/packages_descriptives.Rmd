@@ -1,0 +1,105 @@
+---
+title: "Intro to R"
+output:
+  html_document:
+    highlight: pygments
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+fontsize: 12 pt
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
+```
+
+#Installing Packages 
+
+You might want to get descriptive stats or frequencies for specific variables. There are `base R` functions, but I like to use the package `mosaic`. You can find more information and a cheat sheet for `mosaic` at [this website](https://cran.r-project.org/web/packages/mosaic/vignettes/MinimalR.pdf).
+
+First we need to install the `mosaic` package using the `install.packages()` function. The package name goes inside of the parentheses in double quotes: "mosaic".  This is something we do only once in the console, you wouldn't want to save it in your .Rmd file, but if you do, be sure to comment it out with a `#` like I have here.
+
+```{r}
+#install.packages("mosaic")
+```
+
+Once a package is installed, any time we start a new R session and we want to use functions inside of that package, we will need to load the package with the `library()` function. 
+
+```{r, message=FALSE, warning=FALSE}
+library(mosaic)
+
+acitelli <- read.csv("acitelli.csv")
+```
+
+#Basic Descriptive Statistics with `mosaic`
+
+The function `favstats()` will give descriptive statistics for a numerical variable, and the function `tally()` will give you frequencies for a categorical variable (or a numerical variable...if you want it). Functions in `mosaic` use the formula syntax, where `y ~ x`, or for a single variable, `~x`. The `~` key can be found just below your `esc` key. The first argument is the formula, and the second argument is the data frame, e.g., `data = acitelli`.
+
+```{r}
+favstats(~satisfaction, data = acitelli)
+
+tally(~gender, data = acitelli)
+
+#tally() can also give you percentages with the format argument
+tally(~gender, data = acitelli, format = "percent")
+```
+
+You can look up more information about a function with the `?`.
+
+```{r}
+?favstats
+```
+
+Descriptives split by gender.
+
+```{r}
+favstats(satisfaction ~ gender, data = acitelli)
+```
+
+What are the standard deviations of perceived `tension` split by gender?
+
+```{r}
+
+```
+
+What is the minimum of the `self_pos` variable?
+
+```{r}
+
+```
+
+The `mosaic` package also has a function for getting the correlation coefficient, it's called `cor()`. Using the same format (i.e., formula then data), how do you think would you get the correlation of satisfaction and tension?
+
+```{r}
+cor(satisfaction~tension, data = acitelli)
+```
+
+For bivariate correlation matrices, I use the `corr.test()` function from the `psych` package.
+
+```{r, message=FALSE}
+library(psych)
+
+corr.test(acitelli)
+```
+
+We can also subset the `acitelli` dataset to get the correlation matrix split by `gender` using the brackets, but this looks like garbage!
+
+```{r}
+#correlations for men
+corr.test(acitelli[which(acitelli$gender==1),c(-3)])$r
+
+#correlations for women
+corr.test(acitelli[which(acitelli$gender==-1),c(-3)])$r
+```
+
+Don't worry, the `tidyverse` to the rescue. 
+
+
+

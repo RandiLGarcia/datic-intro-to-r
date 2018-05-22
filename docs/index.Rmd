@@ -24,12 +24,13 @@ fontsize: 12 pt
 ##[Day 1: Introduction to R](Day 1 Slides.pdf)
 
   + Morning Session 9-12
-    - [Intro to the RStudio environment, packages, and RMarkdown](Intro_to_R.html)
-    - [Making Figures with `ggplot2`](Intro_to_ggplot2.html)
+    - [Intro to the RStudio environment, and RMarkdown](intro_to_R.html)
+    - [Intro to packages and descriptive statistics](intro_to_R.html)
+    - [Making Figures with `ggplot2`](intro_to_ggplot2.html)
   + Lunch 12:00 PM to 1:15 PM 
   + Afternoon Session 1:15-3:30
-    - [Data Manipulation and descriptive statistics with `dplyr`](Intro_to_dplyr.html)
-    - [Correlations, Reliability Test, and Scale Scores](Corr_reliability_ttest.html)
+    - [Data Manipulation and descriptive statistics with `dplyr`](intro_to_dplyr.html)
+    - [Correlations, Reliability Test, and Scale Scores](cor_reliability_ttest.html)
   + Resources for more practice
     - [`dplyr` lab](https://beanumber.github.io/sds192/lab-single_table.html)
     - [`dplyr` lab 2](https://beanumber.github.io/sds192/lab-group_by.html)

@@ -1,0 +1,110 @@
+---
+title: "Intro to R"
+output:
+  html_document:
+    highlight: pygments
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+fontsize: 12 pt
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
+```
+
+# Introduction to R
+
+```{r}
+a_thing <- 4
+another_thing <- 1
+another_Thing <- 7
+
+both_things <- a_thing + another_thing
+```
+
+Then we created a tiny data set.
+
+```{r}
+a_data_thing <- data.frame(x = 2, y = 8)
+
+a_data_thing$x
+```
+
+How would we print the variable y? Type your answer in the chunk below
+
+```{r}
+
+```
+
+Write notes for yourself in the white space. Maybe explain to your future self what dollar signs do.
+
+
+**ERASE THIS AND TYPE SOME NOTES HERE**
+
+
+Enough playing around, let's load some data!
+
+```{r}
+acitelli <- read.csv("acitelli.csv")
+```
+
+Notice that there is now another data object in the top right "environment" pane. If you click on the name of the dataset you can actually look at it. Importantly, you **cannot** change any data, this is by design. We want this behavior but it's hard to get used to!
+
+Next, you want to look at your data. Hint: you can run a single line of code within a chunk with the keyboard shortcut: `ctrl + enter`.
+
+```{r}
+head(acitelli)
+
+str(acitelli)
+
+names(acitelli)
+```
+
+You probably also want descriptive statistics.
+
+```{r}
+summary(acitelli)
+```
+
+The `summary()` function is smart, it will give five-number summaries for numerical variables and counts for categorical vairables, called factors in R. We can use the `as.factor()` function to temporarily change gender from an integer to a factor. This will come in handy later
+
+```{r}
+summary(acitelli$gender)
+
+#the summary function gives counts for factor type variables
+summary(as.factor(acitelli$gender))
+```
+
+
+We can also select pieces of a data frame. That first number is the row, the second is the column.
+
+```{r}
+acitelli[2, 6]
+
+#You try it! Find a numder you want to pull from the dataset.
+#acitelli[ ?, ?]
+
+```
+
+If it is instead a single variable, you can also select a piece.
+
+```{r}
+acitelli$satisfaction[2]
+```
+
+In the chunk below, pick out the gender of the person in the 50th case.
+
+```{r}
+#try it by referring to the row and column of the data frame.
+
+#try it by referring to the variable, using the dollar sign notation.
+
+```

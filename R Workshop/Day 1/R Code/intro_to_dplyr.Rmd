@@ -1,5 +1,5 @@
 ---
-title: "Intro to dplyr"
+title: "Intro to dplyr and forcats"
 output:
   html_document:
     highlight: pygments
@@ -235,6 +235,16 @@ What are the couple ID's of the couples with the lowest 3 average satisfaction s
 
 ```{r}
 #3 lowest
+```
+
+# Forcats
+
+```{r}
+#install.packages("forcats")
+library(forcats)
+
+fct_recode()
+fct_collapse()
 ```
 
 
