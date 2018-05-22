@@ -25,7 +25,7 @@ fontsize: 12 pt
 
   + Morning Session 9-12
     - [Intro to the RStudio environment, and RMarkdown](intro_to_R.html)
-    - [Intro to packages and descriptive statistics](intro_to_R.html)
+    - [Intro to packages and descriptive statistics](packages_descriptives.html)
     - [Making Figures with `ggplot2`](intro_to_ggplot2.html)
   + Lunch 12:00 PM to 1:15 PM 
   + Afternoon Session 1:15-3:30
