@@ -23,14 +23,14 @@ knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all outpu
 acitelli <- read.csv("acitelli.csv")
 ```
 
-# Visualizing Data
-
 There are quite a few ways to make figures in R, we'll the popular package `ggplot2`. You can find a cheat sheet for `ggplot2` [here](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf). Be sure to install it first if you never have, or if you need to update it. 
 
 ```{r}
 #install.packages("ggplot2")
 library(ggplot2)
 ```
+
+# Visualizing Data with `qplot()`
 
 ## Quick Histogram
 
@@ -40,28 +40,39 @@ First, let's make a histogram for `satisfaction`. The easiest way to make a figu
 qplot(satisfaction, data = acitelli)
 ```
 
-There are too many bins (it defaults to 30 bins), we can ask for a specific number by adding the `bins = ` argument. Try playing around the bin number below to find the optimal plot. I put `30` in there as a placeholder.
+There are too many bins (it defaults to 30 bins), we can ask for a specific number by adding the `bins = ` argument. Try playing around the bin number below to find the optimal plot. I put `10` in there as a placeholder.
 
 ```{r}
+#play around with different numbers of bins
 qplot(satisfaction, data = acitelli, bins = 10)
+```
 
+Remember that you can run the `?` code to see the help file for any function. 
+
+```{r}
 ?qplot
 ```
 
-We might want to see if the distributions are different for men and women. We can do this by mapping `Gender` to the fill aesthetic. Note that we could used `color =` if we want a hollow histogram.
+We might want to see if the distributions are different for men and women. We can do this by mapping `Gender` to the fill aesthetic. Note that we could used `color =` if we want a hollow histogram. Try it out!
 
 ```{r}
-qplot(data = acitelli) +
-  geom_histogram(aes(x = satisfaction, color = gender), bins = 10)
+qplot(x = satisfaction, fill = as.factor(gender), data = acitelli, bins = 10)
 ```
+
+Why did we have to change the variable type of gender? What happens if you don't? 
 
 ## Quick Density Plot
 
 An alternative to the histogram is the density plot. It displays a smoothed distribution and the area under the curve always sums to 1, thus, it's good for comparing two groups with different n's. 
 
 ```{r}
-qplot(x = satisfaction, fill = Gender, data = acitelli, alpha = .05, geom = "density") + 
-  scale_color_discrete()
+qplot(x = satisfaction, fill = as.factor(gender), data = acitelli, alpha = .05, geom = "density")
+```
+
+What would you say the `alpha = ` argument is doing? What happens if you take it away? What if you change the value? 
+
+```{r}
+#play with alpha here
 ```
 
 ## Quick Scatterplot
@@ -69,26 +80,34 @@ qplot(x = satisfaction, fill = Gender, data = acitelli, alpha = .05, geom = "den
 We might also want a scatter plot. Again,`qplot()` guesses what we want, but it's a good idea to specify which variable goes on the x-axis and which goes on the y-axis. 
 
 ```{r}
-qplot(x = tension, y = satisfaction, color = Gender, data = acitelli)
+qplot(x = tension, y = satisfaction, data = acitelli)
 ```
 
-We can even add a third variable, mapping it to color. To get the behavior we want, gender has to be a categorical variable (a character variable is fine).
+We can even add a third variable, mapping it to color. 
 
 ```{r}
-qplot(x = tension, y = satisfaction, color = Gender, data = acitelli)
+qplot(x = tension, y = satisfaction, color = gender, data = acitelli)
+```
+
+What's going on with the color scale for gender? Can you explain why this happend? What happens if you change the variable type of gender?
+
+```{r}
+
 ```
 
 ## Quick Boxplots
 
-We can ask for side-by-side boxplots when our x variable is categorical. In this case `qplot()` does **NOT** know what to do, so we tell it we want boxplots with `geom = "boxplot"`. 
+We can ask for side-by-side boxplots when our x variable is categorical. In this case `qplot()` does **NOT** know what to do, so we tell it we want boxplots by adding the argument `geom = "boxplot"`. 
 
 ```{r}
-qplot(y = satisfaction, x = wise_hus, fill = wise_hus, data = menOnly, geom = "boxplot")
+qplot(y = satisfaction, x = as.factor(gender), data = acitelli, geom = "boxplot")
 ```
 
-\newpage
+What would happen if you added `fill = as.factor(gender)` as an argument. Try it by adding a new chunk below. 
 
-#`ggplot()`
+**ADD A NEW CHUNK HERE**
+
+# Full Blown ggplots with `ggplot()`
 
 ## Histogram
 
@@ -122,7 +141,7 @@ Just as before, if we want overlayed histograms, we can map gender to the fill a
 
 ```{r}
 ggplot(acitelli, aes(x = satisfaction)) +
-  geom_histogram(aes(fill = Gender), bins = 12, alpha = 0.5)
+  geom_histogram(aes(fill = as.factor(gender)), bins = 12)
 ```
 
 Alternatively, we can ask for separate facets for each level of the Gender variable with the `fact_wrap()` function. Notice that there is a `~` before Gender inside of this function. 
@@ -130,7 +149,7 @@ Alternatively, we can ask for separate facets for each level of the Gender varia
 ```{r}
 ggplot(acitelli, aes(x = satisfaction)) +
   geom_histogram(bins = 12) +
-  facet_wrap(~Gender)
+  facet_wrap(~as.factor(gender))
 ```
 
 ## Scatter Plot
@@ -157,21 +176,21 @@ ggplot(acitelli, aes(x = tension, y = satisfaction)) +
   geom_smooth(method = "lm", se = 0)
 ```
 
-Again, we can map gender to the color aesthetic.
+Again, we can map gender to the color aesthetic. Note: Here the mapping of gender to color is done in the `geom_smooth()` function---but what would happen if you moved it to the `aes()` function in the `ggplot()` function?
 
 ```{r}
 ggplot(acitelli, aes(x = tension, y = satisfaction)) +
   geom_jitter() +
-  geom_smooth(aes(color = Gender), method = "lm", se = 0)
+  geom_smooth(aes(color = as.factor(gender)), method = "lm", se = 0)
 ```
 
-Or use `facet_wrap()`.
+Or use `facet_wrap()`. In the code below, what does `color = "salmon"` do? Could you change the regression lines to salmon?
 
 ```{r}
 ggplot(acitelli, aes(x = tension, y = satisfaction)) +
-  geom_jitter() +
+  geom_jitter(color = "salmon") +
   geom_smooth(method = "lm", se = 0) +
-  facet_wrap(~Gender)
+  facet_wrap(~as.factor(gender))
 ```
 
 ## Labels and Colors
@@ -179,8 +198,10 @@ ggplot(acitelli, aes(x = tension, y = satisfaction)) +
 We can create a plot object with the `<-` symbol. Then to print the plot we'd need to run a line with the name of our plot. 
 
 ```{r}
-myplot <- ggplot(acitelli, aes(x = tension, y = satisfaction, color = Gender, linetype = Gender)) +
-  geom_jitter() +
+myplot <- ggplot(acitelli, aes(x = tension, 
+                               y = satisfaction, 
+                               color = as.factor(gender))) +
+  geom_jitter(height = 0, width = .05) +
   geom_smooth(method = "lm", se = 0)
 
 myplot
@@ -192,7 +213,10 @@ Then, we can add to that plot object. We can add x labels, x labels, change the 
 myplot + 
   xlab("Tension") +
   ylab("Satisfaction") +
-  scale_color_manual(values = c("gold", "dodgerblue")) +
-  theme_minimal()
+  scale_color_manual(values = c("gold", "dodgerblue"), 
+                     name = "Gender") +
+  ylim(1,4) +
+  xlim(1,4) +
+  theme_minimal() 
 ```
 
