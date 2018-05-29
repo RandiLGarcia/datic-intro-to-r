@@ -1,5 +1,5 @@
 ---
-title: "Intro to dplyr and forcats"
+title: "Intro to dplyr"
 output:
   html_document:
     highlight: pygments
@@ -20,10 +20,10 @@ knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all outpu
 ***
 
 ```{r}
-acitelli <- read.csv(file.choose(), header=TRUE)
+acitelli <- read.csv("acitelli.csv")
 ```
 
-#Data Manipulation (data cleaning)
+# Data Manipulation (data cleaning)
 
 We'll use the package `dplyr`. The `dplyr` package contains the functions for all of the data cleaning verbs: `filter()`, `mutate()`, `rename()`, `arrange()`, `select()`, `summarize()`, and `group_by()`. You can find a cheat sheet for `dplyr` [here](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
 
@@ -32,7 +32,7 @@ We'll use the package `dplyr`. The `dplyr` package contains the functions for al
 library(dplyr)
 ```
 
-##Filtering cases with filter()
+## Filtering cases with `filter()`
 
 First, let's filter cases. We can make a dataset of men only. Notice that we used a double equal sign, `==`, instead of single, `=`. When you want to ask if something is equal to some value or another variable, that is, you want to use equal in a *logical statement*, you need the double equal. You can also use `>` `<` `>=` `<=` `&`, which means **AND**, and finally, `|` which means **OR**.
 
@@ -80,7 +80,7 @@ mature_hus <- menOnly %>%
   filter(Yearsmar > median(Yearsmar))
 ```
 
-##Adding new variables with `mutate()` 
+## Adding new variables with `mutate()` 
 
 Let's add a new categorical variable that marks the median split on Yearsmar. After you create it, take a look at it.
 
@@ -101,7 +101,7 @@ Now for a sanity check, how would you get the descriptive stats split by mature 
 #descriptives split
 ```
 
-##Renaming variable with `rename()`
+## Renaming variable with `rename()`
 
 We copy a variable and give it a new name with a function you already know, `mutate()`.
 
@@ -125,8 +125,13 @@ menOnly <- menOnly %>%
          other_positivity = other_pos)
 ```
 
+## Recoding with `case_when()`
 
-##Sorting with `arrange()`
+```{r}
+
+```
+
+## Sorting with `arrange()`
 
 First, you should know that you can sort in the viewer by clicking the (faint) arrows just to the right of each variable name. Give it a try. It's often handy to have a sort command in your code, and/or you might want to sort by more than one variable. 
 
@@ -160,7 +165,7 @@ acitelli %>%
 ```
 
 
-##Selecting variables with `select()`
+## Selecting variables with `select()`
 
 Save a smaller subset of variables.
 
@@ -177,7 +182,7 @@ no_tension <- acitelli %>%
 ```
 
 
-##Descriptive statistics with `summarize()`
+## Descriptive statistics with `summarize()`
 
 ```{r}
 acitelli %>%
@@ -186,7 +191,9 @@ acitelli %>%
             min = min(satisfaction))
 ```
 
-##Grouped descriptives with `group_by()`
+## Grouping Data with `group_by()`
+
+### Grouped descriptives
 
 We can split the file and view results grouped by some variable.
 
@@ -197,6 +204,8 @@ acitelli %>%
             sd = sd(satisfaction),
             min = min(satisfaction))
 ```
+
+### Aggregating Variables
 
 You can use `group_by()` to create aggregated variables, this is handy if you have nested data. We actually do have married couples here, so let's create a dyad mean tension variable. 
 
@@ -209,8 +218,7 @@ acitelli <- acitelli %>%
 #this last command is not entirely nessesary, but good practice
 ```
 
-
-##Pipelines
+## Pipelines
 
 We now seen our first pipelines, using `group_by()`. Now we can make a pipeline of many of the commands I did above. The last thing I do is drop useless `gender` variable, because the resulting dataset if all men.
 
@@ -237,14 +245,24 @@ What are the couple ID's of the couples with the lowest 3 average satisfaction s
 #3 lowest
 ```
 
-# Forcats
+
+## Adding Variables and Cases
 
 ```{r}
-#install.packages("forcats")
-library(forcats)
 
-fct_recode()
-fct_collapse()
 ```
+
+
+## Transforming Data
+
+```{r}
+#install.packages("tidyr")
+library(tidyr)
+```
+
+```{r}
+
+```
+
 
 

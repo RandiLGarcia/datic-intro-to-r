@@ -28,24 +28,27 @@ library(dplyr)
 library(psych)
 ```
 
-#Data inside R packages
+# Data inside R packages
 
 To demonstrate the use of the `alpha()` function in the `psych` package from computing Cronbach's alpha, we will need a data set with scale items. Many packages have example datasets pre-loaded. The `psych` package has a dataset called `bfi` that has n = 2800 participants responding to 25 personality items for the Big Five Inventory. 
 
-```{r}
+```{r, eval = FALSE}
 #We can see a list of ALL the datasets current avaliable
 data()
+```
+
+Use the `?` to get more information. 
+
+```{r, eval = FALSE}
+?bfi
 ```
 
 If we see a dataset we like we can load it into our environment 
 
 ```{r}
 data(bfi)
-?bfi
 glimpse(bfi)
 ```
-
-#Correlation Matrix
 
 First, we can get descriptive statistics for individual personality scale items. Let's do the agreeableness scale first. 
 
@@ -53,16 +56,9 @@ First, we can get descriptive statistics for individual personality scale items.
 #Get descriptive statistics with mosaic or dplyr here. Get them for Age too.
 
 #Also, get the frequencies for gender and education 
-
-favstats(~A2, data = bfi)
-
-tally(~gender, data = bfi)
-
-
-  summary(mutate(bfi, gender = as.factor(gender)))
-
-
 ```
+
+# Bivariate Correlation Matrix
 
 In addition to descriptive statistics, we would probably also like to get a correlation matrix for items on a scale. I like the function `corr.test()` in the `psych` package. Notice that we are using the `dplyr` `select()` function inside of `corr.test()`.
 
@@ -79,13 +75,11 @@ library(GGally)
 ggpairs(select(bfi, A1, A2, A3, A4, A5))
 ```
 
-It is clear that we will need to reverse score A1 to assess reliability and to create our agreeableness scale scores. Hint: to reverse score an item use this formula: `A1.r = (min(A1, na.rm = TRUE) + max(A1, na.rm = TRUE)) - A1`.
+It is clear that we will need to reverse score A1 to assess reliability and to create our agreeableness scale scores. Hint: to reverse score an item you might use this formula: `item.r = (min(item, na.rm = TRUE) + max(item, na.rm = TRUE)) - item`. Although, beware that if no one in your sample used the min and/or max of your scale, this code will NOT work. 
 
-```{r, include=FALSE}
+```{r}
 bfi <- bfi %>%
   mutate(A1.r = (min(A1, na.rm = TRUE) + max(A1, na.rm = TRUE)) - A1)
-
-bfi$A1.r2 <- min(bfi$A1, na.rm = TRUE) + max(bfi$A1, na.rm = TRUE) - bfi$A1
 ```
 
 Now compute correlation matrices for the other 4 personality sub scales and create any reverse scored items the need to be created.
@@ -94,19 +88,33 @@ Now compute correlation matrices for the other 4 personality sub scales and crea
 corr.test(select(bfi, A1.r, A2, A3, A4, A5))
 ```
 
+Or, you can do it all at once with the pipe!
+
+```{r}
+bfi %>%
+  mutate(A1.r = (min(A1, na.rm = TRUE) + max(A1, na.rm = TRUE)) - A1) %>%
+  select(A1.r, A2, A3, A4, A5) %>%
+  corr.test()
+```
+
 For more practice, find another dataset that sounds interesting and run some correlation matrices.
 
 ```{r}
 #data()
 ```
 
-#Cronbach's alpha
+# Cronbach's alpha
 
 Now that we have our reverse scored items and we have a sense of how the items relate, the next step is to test the scale reliability. We do this with Cronbach's alpha. There is a function called `alpha()` in the `psych` package.   
 
 ```{r}
 alpha(select(bfi, A1.r, A2, A3, A4, A5))
-?alpha
+```
+
+How would you use the pipe?
+
+```{r}
+#use the pipe
 ```
 
 With an alphas of .70 we have a reliable agreeableness scale. The next step would be to create agreeableness scale scores for participants, the average of these 5 items. We can do this with `mutate()`. Note that we cannot use `mean()` here because `mean()` is going to get the mean of a column (a variable). What we want it the mean across columns.   
@@ -115,14 +123,22 @@ With an alphas of .70 we have a reliable agreeableness scale. The next step woul
 bfi <- bfi %>% 
   mutate(agreeable = (A1.r + A2 + A3 + A4 + A5)/5) 
 
-bfi$agreeable2 <- rowMeans(select(bfi, A1.r, A2, A3, A4, A5), na.rm = TRUE)
+#If a participant is missing data on any item, we should use the base R function rowMeans() instead 
+bfi <- bfi %>% 
+  mutate(agreeable = rowMeans(select(bfi, A1.r, A2, A3, A4, A5), na.rm = TRUE))
 ```
 
-Let's take a look at it with a visualization. Also try faceting by gender.
+Let's take a look at it with a visualization. 
 
 ```{r}
-qplot(y = agreeable2, x = as.factor(gender), data = bfi, bins = 10, geom = "boxplot") +
+qplot(y = agreeable, x = as.factor(gender), data = bfi, bins = 10, geom = "boxplot") +
   coord_flip()
+```
+
+Also try making histogram, faceted by gender, and perhaps turning the `qplot()` code above into `ggplot()` code.
+
+```{r}
+#ggplot practice
 ```
 
 Now calculate the reliabilities for each of the other 4 scales. Be sure to include the reverse scored items you created where relevant. 
@@ -138,32 +154,21 @@ Create scale scores and make visualizations of those scale scores.
 ```
 
 
-#t-Tests
+# t-Tests
 
-##Independent Samples t-Test
+## Independent Samples t-Test
 
 Next we can ask, are men and women different on agreeableness? To answer this question we need to run an independent samples t-test. We'll use the function `t.test()` in the `mosaic` package. Recall that `mosaic` first needs the formula, `y ~ x`, then the data, `data = dataName`.
 
 ```{r}
-t.test(bfi$agreeable, mu = 3.5, data = bfi)
+library(mosaic) #reminder!
 
-t.test(bfi$agreeable ~ bfi$gender, data = bfi)
+t.test(~agreeable, mu = 3.5, data = bfi)
+
+t.test(agreeable ~ gender, data = bfi)
 ```
 
 There is a statistically significant difference between women and men on agreeableness, *t*(1654.50) = -10.73, *p* < .001 , with women (*M* = 4.77, *SD* = 0.86) scoring higher than men (*M* = 4.38, *SD* = 0.93). It is possible to code in these numbers such that if the data were updated, the text would update as well. 
-
-```{r}
-tmod <- t.test(agreeable ~ gender, data = bfi)
-
-names(tmod)
-tmod$statistic
-
-tmod$parameter
-
-ds <- favstats(agreeable ~ gender, data = bfi)
-```
-
-There is a statistically significant difference between women and men on agreeableness, *t*(`r round(tmod$parameter, 2)`) = `r round(tmod$statistic, 2)`, *p* < `r ifelse(tmod$p.value > .001, round(tmod$p.value, 3),.001)`, with women (*M* = `r round(ds[2,7], 2)`, *SD* = `r round(ds[2,8], 2)`) scoring higher than men (*M* = `r round(ds[1,7], 2)`, *SD* = `r round(ds[1,8], 2)`).
 
 We can also ask for equal variance assumed. 
 
@@ -171,14 +176,29 @@ We can also ask for equal variance assumed.
 t.test(agreeable ~ gender, data = bfi, var.equal = TRUE)
 ```
 
+### Mini-Lesson: Embedding Statistics in Text
+
+```{r}
+tmod <- t.test(agreeable ~ gender, data = bfi)
+
+names(tmod)
+
+tmod$statistic
+tmod$parameter
+tmod$p.value
+
+ds <- favstats(agreeable ~ gender, data = bfi)
+```
+
+There is a statistically significant difference between women and men on agreeableness, *t*(`r round(tmod$parameter, 2)`) = `r round(tmod$statistic, 2)`, *p* < `r ifelse(tmod$p.value > .001, round(tmod$p.value, 3),.001)`, with women (*M* = `r round(ds[2,7], 2)`, *SD* = `r round(ds[2,8], 2)`) scoring higher than men (*M* = `r round(ds[1,7], 2)`, *SD* = `r round(ds[1,8], 2)`).
+
 Test for gender differences for the other 4 scales. Then test differences between those who graduated college, and those who did not. Hint: use `mutate()` to create a dichotomous variable as we did for `wise_hus`. 
 
 ```{r}
 #more t-Tests
 ```
 
-
-##Paired Samples t-Test
+## Paired Samples t-Test
 
 To demonstrate paired samples t-test I'd like to use yet another built in dataset. The `sat.act` dataset has information for 700 people on their SAT verbal, SAT quantitative, and ACT scores.
 
@@ -188,10 +208,10 @@ data(sat.act)
 glimpse(sat.act)
 ```
 
-Let's compare people's scores on the SAT verbal to their scores on the SAT quantitative using the `t.test()` function. This time instead of using the formula in the beginning, we add the two variables to be compared separated by a `,`. We also need to add `paired = TRUE`.
+Let's compare people's scores on the SAT verbal to their scores on the SAT quantitative using the `t.test()` function in Base R. This time instead of using the formula in the beginning, we add the two variables to be compared separated by a `,`. We also need to add `paired = TRUE`. 
 
 ```{r}
-t.test(sat.act$SATV, sat.act$SATQ, paired = TRUE)
+t.test(~(SATV-SATQ), data = sat.act)
 ```
 
 There is no statistically significant difference between SAT verbal and SAT quantitative scores, *t*(686) = 0.57, *p* = .566. But perhaps there is a difference for boys only, or for girls only. We can create a dataset of just boys using `filter()` and then another one of just girls. This would be completely fine, but we could also pipe directly into the `t.test()` function. There is a catch: The pipe, `%>%`, puts the resulting dataframe into the first position in the destination function, but we want it in the third position. We can use the `.` symbol to pipe the dataframe into whichever position we'd like. 
@@ -199,34 +219,45 @@ There is no statistically significant difference between SAT verbal and SAT quan
 ```{r}
 sat.act %>%
   filter(gender == 1) %>%
-  t.test(SATV, SATQ, data = ., paired = TRUE)
+  t.test(~(SATV-SATQ), data = .)
 ```
 
 ```{r}
 sat.act %>%
   filter(gender == 2) %>%
-  t.test(SATV, SATQ, data = ., paired = TRUE)
+  t.test(~(SATV-SATQ), data = .)
 ```
 
 Explore the differences in `SATV` and `SATQ` for each level of the `education` variable. 
 
 ```{r}
 #differences for each level of education
+?sat.act
 ```
 
+### Side-by-Side Bar Chart 
 
-#Chi-Square Test
+```{r}
+sat.act %>%
+  mutate(education = as.factor(education),
+         gender = as.factor(gender)) %>%
+ggplot(aes(x = education, y = SATV, fill = gender)) +
+  stat_summary(fun.y = "mean", geom = "bar", 
+               position = position_dodge(width = 0.9)) +
+  stat_summary(fun.data = "mean_se", geom = "errorbar", 
+               width = 0.25, 
+               position = position_dodge(width = 0.9))
+```
+
+# Bonus: Chi-Square Test
 
 Here is a bonus chi-square test to test if education is associated with gender. Question: Is degree attainment related to gender?
 
 ```{r}
 counts <- tally(gender~education, data = filter(bfi, !is.na(education)))
+```
 
-x2 <- chisq.test(counts)
-names(x2)
-
-x2$expected
-
-tally(education~gender, data = filter(bfi, !is.na(education)), format = "percent")
+```{r}
+chisq.test(counts)
 ```
 

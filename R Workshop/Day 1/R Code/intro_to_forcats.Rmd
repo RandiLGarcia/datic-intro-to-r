@@ -1,0 +1,41 @@
+---
+title: "Intro to forcats"
+output:
+  html_document:
+    highlight: pygments
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+fontsize: 12 pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
+```
+
+***
+
+```{r}
+library(forcats)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(psych)
+
+acitelli <- read.csv("acitelli.csv")
+```
+
+# Forcats
+
+```{r}
+
+
+fct_recode()
+fct_collapse()
+```
+
