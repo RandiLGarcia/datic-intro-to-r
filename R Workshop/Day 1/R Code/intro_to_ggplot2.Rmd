@@ -23,22 +23,7 @@ knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all outpu
 acitelli <- read.csv("acitelli.csv")
 ```
 
-We first want to create a gender variable that is a character, this will make the output look nicer. We'll make use of the `ifelse()` function inside of `mutate()`.
-
-```{r}
-library(dplyr)
-
-acitelli <- acitelli %>%
-  mutate(gender = as.factor(gender),
-         Gender = ifelse(gender == -1, "Women", "Men"))
-
-menOnly <- acitelli %>%
-  filter(gender == 1) %>%
-  mutate(wise_hus = Yearsmar > median(Yearsmar)) %>%
-  select(-gender)
-```
-
-#Visualizing Data
+# Visualizing Data
 
 There are quite a few ways to make figures in R, we'll the popular package `ggplot2`. You can find a cheat sheet for `ggplot2` [here](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf). Be sure to install it first if you never have, or if you need to update it. 
 
@@ -47,9 +32,10 @@ There are quite a few ways to make figures in R, we'll the popular package `ggpl
 library(ggplot2)
 ```
 
-##Quick Histogram
+## Quick Histogram
 
-First, let's make a histogram for `satisfaction`. The easiest way to make a figure with `ggplot2` is with the `qplot()` function. This stands for *quick plot*.  Notice in the code below that we did not specify anything about a histogram. `qplot()` guesses which type of plot we want based on the variable's type (i.e., integer, number, double, factor, character). 
+First, let's make a histogram for `satisfaction`. The easiest way to make a figure with `ggplot2` is with the `qplot()` function. This stands for *quick plot*.  Notice in the code below that we did not specify anything about a histogram. `qplot()` guesses which type of plot we want based on the variable's type (i.e., integer, number, double, factor, character).  
+
 ```{r}
 qplot(satisfaction, data = acitelli)
 ```
@@ -69,7 +55,7 @@ qplot(data = acitelli) +
   geom_histogram(aes(x = satisfaction, color = gender), bins = 10)
 ```
 
-##Quick Density Plot
+## Quick Density Plot
 
 An alternative to the histogram is the density plot. It displays a smoothed distribution and the area under the curve always sums to 1, thus, it's good for comparing two groups with different n's. 
 
@@ -78,7 +64,7 @@ qplot(x = satisfaction, fill = Gender, data = acitelli, alpha = .05, geom = "den
   scale_color_discrete()
 ```
 
-##Quick Scatterplot
+## Quick Scatterplot
 
 We might also want a scatter plot. Again,`qplot()` guesses what we want, but it's a good idea to specify which variable goes on the x-axis and which goes on the y-axis. 
 
@@ -92,7 +78,7 @@ We can even add a third variable, mapping it to color. To get the behavior we wa
 qplot(x = tension, y = satisfaction, color = Gender, data = acitelli)
 ```
 
-##Quick Boxplots
+## Quick Boxplots
 
 We can ask for side-by-side boxplots when our x variable is categorical. In this case `qplot()` does **NOT** know what to do, so we tell it we want boxplots with `geom = "boxplot"`. 
 
@@ -104,7 +90,7 @@ qplot(y = satisfaction, x = wise_hus, fill = wise_hus, data = menOnly, geom = "b
 
 #`ggplot()`
 
-##Histogram
+## Histogram
 
 For more complex figures we will need to move away from using the `qplot()` function in favor of the heavy duty `ggplot()` function. To get a sense of how `ggplot()` builds plots, first we will just run the empty function.
 
@@ -147,7 +133,7 @@ ggplot(acitelli, aes(x = satisfaction)) +
   facet_wrap(~Gender)
 ```
 
-##Scatter Plot
+## Scatter Plot
 
 Next we'll make that scatter plot again. We'll map `tension` to the x-axis and `satisfaction` to the y-axis. Then we'll add `geom_point()`.
 
@@ -188,7 +174,7 @@ ggplot(acitelli, aes(x = tension, y = satisfaction)) +
   facet_wrap(~Gender)
 ```
 
-##Labels and Colors
+## Labels and Colors
 
 We can create a plot object with the `<-` symbol. Then to print the plot we'd need to run a line with the name of our plot. 
 

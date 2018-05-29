@@ -32,7 +32,7 @@ First we need to install the `mosaic` package using the `install.packages()` fun
 
 Once a package is installed, any time we start a new R session and we want to use functions inside of that package, we will need to load the package with the `library()` function. 
 
-```{r, message=FALSE, warning=FALSE}
+```{r}
 library(mosaic)
 
 acitelli <- read.csv("acitelli.csv")

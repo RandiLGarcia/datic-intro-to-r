@@ -38,11 +38,11 @@ a_data_thing <- data.frame(x = 2, y = 8)
 a_data_thing$x
 ```
 
-How would we print the variable y? Type your answer in the chunk below
+How would we print the variable y? Create a new chunk below and type your answer in it.
 
-```{r}
 
-```
+
+
 
 Write notes for yourself in the white space. Maybe explain to your future self what dollar signs do.
 
