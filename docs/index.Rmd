@@ -24,7 +24,7 @@ fontsize: 12 pt
 ##[Day 1: Introduction to R](Day 1 Slides.pdf)
 
   + Morning Session 9-12
-    - [Intro to the RStudio environment, and RMarkdown](intro_to_R.html)
+    - [Intro to the RStudio environment, and RMarkdown](Intro_to_R.html)
     - [Intro to packages and descriptive statistics](packages_descriptives.html)
     - [Making Figures with `ggplot2`](intro_to_ggplot2.html)
   + Lunch 12:00 PM to 1:15 PM 
