@@ -1,15 +1,15 @@
 ---
-title: "Intro to R"
+title: "R packages and Descriptive Statistics"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
   html_document:
     highlight: pygments
     theme: cerulean
     toc: yes
     toc_depth: 3
     toc_float: yes
-  pdf_document:
-    toc: yes
-    toc_depth: 3
   word_document:
     toc: yes
     toc_depth: '3'
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all outpu
 
 #Installing Packages 
 
-You might want to get descriptive stats or frequencies for specific variables. There are `base R` functions, but I like to use the package `mosaic`. You can find more information and a cheat sheet for `mosaic` at [this website](https://cran.r-project.org/web/packages/mosaic/vignettes/MinimalR.pdf).
+You might want to get descriptive stats or frequencies for specific variables. There are `base R` functions, but I like to use the package `mosaic`. You can download a cheat sheet for `mosaic` by clicking [here](http://github.com/rstudio/cheatsheets/raw/master/mosaic.pdf).
 
 First we need to install the `mosaic` package using the `install.packages()` function. The package name goes inside of the parentheses in double quotes: "mosaic".  This is something we do only once in the console, you wouldn't want to save it in your .Rmd file, but if you do, be sure to comment it out with a `#` like I have here.
 

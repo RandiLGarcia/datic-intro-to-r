@@ -8,8 +8,6 @@ output:
     toc_depth: 3
     toc_float: yes
   pdf_document:
-    toc: yes
-    toc_depth: 3
   word_document:
     toc: yes
     toc_depth: '3'
@@ -19,8 +17,6 @@ fontsize: 12 pt
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
 ```
-
-# Introduction to R
 
 ```{r}
 a_thing <- 4

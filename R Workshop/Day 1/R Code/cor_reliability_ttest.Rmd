@@ -1,15 +1,15 @@
 ---
 title: "Correlation Matrices, Reliability Tests, and t-Tests"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
   html_document:
     highlight: pygments
     theme: cerulean
     toc: yes
     toc_depth: 3
     toc_float: yes
-  pdf_document:
-    toc: yes
-    toc_depth: 3
 fontsize: 12 pt
 ---
 ```{r setup, include=FALSE}

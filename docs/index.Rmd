@@ -15,7 +15,7 @@ output:
 fontsize: 12 pt
 ---
 
- > Workshop location: Gentry.
+ > Workshop location: Gentry 140, 9:00am - 5:00pm.
 
 ***
 

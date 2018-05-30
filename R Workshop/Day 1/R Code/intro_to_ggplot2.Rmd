@@ -1,15 +1,15 @@
 ---
 title: "Intro to ggplot2"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
   html_document:
     highlight: pygments
     theme: cerulean
     toc: yes
     toc_depth: 3
     toc_float: yes
-  pdf_document:
-    toc: yes
-    toc_depth: 3
 fontsize: 12 pt
 ---
 ```{r setup, include=FALSE}
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all outpu
 acitelli <- read.csv("acitelli.csv")
 ```
 
-There are quite a few ways to make figures in R, we'll the popular package `ggplot2`. You can find a cheat sheet for `ggplot2` [here](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf). Be sure to install it first if you never have, or if you need to update it. 
+There are quite a few ways to make figures in R, we'll the popular package `ggplot2`. You can find a cheat sheet for `ggplot2` [here](http://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf). Be sure to install it first if you never have, or if you need to update it. 
 
 ```{r}
 #install.packages("ggplot2")
@@ -69,7 +69,7 @@ An alternative to the histogram is the density plot. It displays a smoothed dist
 qplot(x = satisfaction, fill = as.factor(gender), data = acitelli, alpha = .05, geom = "density")
 ```
 
-What would you say the `alpha = ` argument is doing? What happens if you take it away? What if you change the value? 
+What would you say the `alpha = ` argument is doing? What happens if you take it away? What if you change the value?
 
 ```{r}
 #play with alpha here

@@ -1,15 +1,15 @@
 ---
 title: "Intro to dplyr"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
   html_document:
     highlight: pygments
     theme: cerulean
     toc: yes
     toc_depth: 3
     toc_float: yes
-  pdf_document:
-    toc: yes
-    toc_depth: 3
 fontsize: 12 pt
 ---
 ```{r setup, include=FALSE}
@@ -25,7 +25,7 @@ acitelli <- read.csv("acitelli.csv")
 
 # Data Manipulation (data cleaning)
 
-We'll use the package `dplyr`. The `dplyr` package contains the functions for all of the data cleaning verbs: `filter()`, `mutate()`, `rename()`, `arrange()`, `select()`, `summarize()`, and `group_by()`. You can find a cheat sheet for `dplyr` [here](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
+We'll use the package `dplyr`. The `dplyr` package contains the functions for all of the data cleaning verbs: `filter()`, `mutate()`, `rename()`, `arrange()`, `select()`, `summarize()`, and `group_by()`. You can find a cheat sheet for `dplyr` [here](http://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf).
 
 ```{r, message=FALSE, warning=FALSE}
 #install.packages("dplyr")
@@ -47,17 +47,10 @@ menOnly <- acitelli %>%
   filter(gender ==1)
 ```
 
-We can save this new data set in our files as a csv. Note that the file path conventions are different for Windows machines. If copying and pasting from properties, you will need to change backslashes to forward slashes. 
+We can save this new data set in our files as a csv. This code will save in the same directory where your .Rmd file is saved. You could give a more specific file path. 
 
 ```{r}
-write.csv(menOnly, 
-  file = "/Users/randigarcia/Desktop/Data/men.csv") #replace file path
-```
-
-It's in your working directory, which you can find with the following command. It is an empty function, so it looks weird.
-
-```{r, eval=FALSE}
-getwd()
+write.csv(menOnly, "men.csv")
 ```
 
 How about only the men who are above the median for `Yearsmar`. First, find the median years married.
@@ -110,7 +103,7 @@ menOnly <- menOnly %>%
   mutate(old_hus = mature_hus)
 ```
 
-We can rename a variable without creating a new one with `rename()`. This is handy if you forget to name variables in Qualtrics!
+We can rename a variable without creating a new one with `rename(new_name = old_name)`. This is handy if you forget to name variables in Qualtrics!
 
 ```{r}
 menOnly <- menOnly %>%
@@ -127,8 +120,28 @@ menOnly <- menOnly %>%
 
 ## Recoding with `case_when()`
 
-```{r}
+Let's say we want to take gender, which is currently effects coded (men = 1 and women = -1) and make it a dummy variable. We can use the `ifelse()` function in combination with `mutate()` to achieve this. 
 
+```{r}
+acitelli <- acitelli %>%
+  mutate(man = ifelse(gender == 1, 1, 0))
+```
+
+But what if we wanted to slice up years married to create a string variable that indicated newlyweds, early marriage, and mature marriages? We could nest `ifelse()` statements, but a better idea is to use the `case_when()` function. 
+
+```{r}
+acitelli <- acitelli %>%
+  mutate(married = ifelse(Yearsmar < -7, "newlywed", 
+                          ifelse(Yearsmar > -7 & Yearsmar < 0, "early marriage", "mature marriage")))
+```
+
+These nested `ifelse()` functions can get out of control. So `case_when()` to the rescue. 
+
+```{r}
+acitelli <- acitelli %>%
+  mutate(married = case_when(Yearsmar < -7 ~ "newlywed", 
+                             Yearsmar > -7 & Yearsmar < 0 ~ "early marriage", 
+                             Yearsmar >= 0 ~ "mature marriage"))
 ```
 
 ## Sorting with `arrange()`
@@ -164,7 +177,6 @@ acitelli %>%
   head()
 ```
 
-
 ## Selecting variables with `select()`
 
 Save a smaller subset of variables.
@@ -180,7 +192,6 @@ We can also save everything but some variable(s).
 no_tension <- acitelli %>%
   select(-tension)
 ```
-
 
 ## Descriptive statistics with `summarize()`
 
@@ -244,25 +255,5 @@ What are the couple ID's of the couples with the lowest 3 average satisfaction s
 ```{r}
 #3 lowest
 ```
-
-
-## Adding Variables and Cases
-
-```{r}
-
-```
-
-
-## Transforming Data
-
-```{r}
-#install.packages("tidyr")
-library(tidyr)
-```
-
-```{r}
-
-```
-
 
 
