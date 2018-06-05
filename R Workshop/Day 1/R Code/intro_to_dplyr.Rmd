@@ -1,21 +1,25 @@
 ---
 title: "Intro to dplyr"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: 3
   html_document:
     highlight: pygments
     theme: cerulean
     toc: yes
     toc_depth: 3
     toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: 3
 fontsize: 12 pt
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
 ```
+
+***
+
+[Back to schedule](index.html)
 
 ***
 
@@ -256,4 +260,8 @@ What are the couple ID's of the couples with the lowest 3 average satisfaction s
 #3 lowest
 ```
 
+***
 
+[Back to schedule](index.html)
+
+***

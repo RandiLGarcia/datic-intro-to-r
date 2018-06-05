@@ -1,0 +1,189 @@
+---
+title: "Data Restructuring with tidyr"
+output:
+  html_document:
+    highlight: pygments
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+fontsize: 12 pt
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
+```
+
+***
+
+[Back to schedule](index.html)
+
+***
+
+```{r}
+library(dplyr)
+library(tidyr)
+
+PIAT_wide <- read.csv("PIAT_wide.csv")
+```
+
+To perform the kind of data restructuring common in longitudinal data analysis we will make use of the functions `gather()` and `spread()` from the `tidyr` package. The gather function takes variables that are out in the columns, as in wide versions of datasets, and gathers them up into the rows. Spread is the opposite, it takes values that are long down the rows, like in long data files, and spreads them out over more columns. There are other functions we'll use along the way. Some you have seen like `mutate()` and `select()`, and others are new like `separate()` and `unite()`---also a matched pair!
+
+Don't forget that you can use the `?` function to get information about a function. 
+
+# Restructuring from Wide to Long
+
+Take a look at the `PIAT_wide` data frame.
+
+```{r, eval=FALSE}
+View(PIAT_wide)
+```
+
+To get a file like this into the person-period format we need, we have to restructure it. The looong `dplyr` pipeline below accomplished this task for us. But let's break it down into steps. 
+
+```{r}
+PIAT_long <- PIAT_wide %>%
+  gather(key = "key", value = "value", age_w1:piat_w3) %>%
+  arrange(id) %>%
+  separate(key, into = c("variable", "foo"), sep = "_") %>%
+  separate(foo, into = c("dubs", "wave"), sep = 1) %>%
+  select(-dubs, -X) %>%
+  spread(key = "variable", value = "value")
+```
+
+First, we go ahead and gather up the scores. Now, we are not ONLY gathering `piat_w1` to `piat_w3` as you might imagine. We want all of the time-varying covariates to be in the rows, so we'll over-gather, do a SUPER-gather!
+
+```{r}
+temp1 <- PIAT_wide %>%
+  gather(key = "key", value = "value", age_w1:piat_w3)
+```
+
+Take a look at `temp1`
+
+```{r, eval=FALSE}
+View(temp1)
+```
+
+It helps to arrange by id.
+
+```{r}
+temp2 <- temp1 %>%
+  arrange(id)
+```
+
+Next, let's separate out that key variable---there's some good information in there! All of the information from "_" on is telling us which wave the variable comes from. Datasets don't always have this information handy or clean, so sometimes you'd have to do some variable renaming first with `rename()`. 
+
+```{r}
+temp3 <- temp2 %>%
+  separate(key, into = c("variable", "foo"), sep = "_")
+```
+
+Next, we'll further separate `foo` into some W's and the actual wave number. We could have done these things in one step by counting places backwards from the end of the character string. 
+
+```{r}
+temp4 <- temp3 %>%
+  separate(foo, into = c("dubs", "wave"), sep = 1)
+```
+
+Let's take out dubs and the `X` column that `gather()` added, they are dead to us now. 
+
+```{r}
+temp5 <- temp4 %>%
+  select(-dubs, -X)
+```
+
+Finally, we can spread some of these values back out to get that person-period format we want!
+
+```{r}
+temp6 <- temp5 %>%
+  spread(key = "variable", value = "value")
+```
+
+## Recentering Time
+
+Now that we have out person-period dataset, we might want to create a new more time variables to change the meaning of zero. Let's create `wave_1` which is time centered at baseline, `agegrp_65` which is years from baseline, and `age_6` which is their actual age re-centered at age 6.
+
+```{r}
+PIAT_long <- PIAT_long %>%
+  mutate(wave = as.numeric(wave),
+         wave_1 = wave - 1, 
+         agegrp_65 = agegrp - 6.5, 
+         age_6 = age - 6)
+```
+
+# Restructuring from Long to Wide
+
+Now the data did not actually originally start as wide. To get from wide to long I used a different process. The entire pipeline appears in the following chunk. But let's break it down. 
+
+```{r}
+PIAT_wide <- PIAT_long %>%
+  select(id, LD_FAKE, wave, agegrp, age, piat) %>%
+  gather(key = "key", value = "value", agegrp:piat) %>%
+  arrange(id) %>%
+  mutate(ind = "w") %>%
+  unite(col = "foo", ind, wave, sep = "", remove = TRUE) %>%
+  unite(col = "variable", key, foo, sep = "_", remove = TRUE)%>%
+  spread(key = "variable", value = "value")
+```
+
+First I moved the constant variables toward the front of the data file with the `select()` function. 
+
+```{r}
+temp1 <- PIAT_long %>%
+  select(id, LD_FAKE, wave, agegrp, age, piat)
+```
+
+Then I gathered all of the time-varying variables with the `gather()` function from the `tidyr` package. `Gather` is like the opposite of `spread`. I gather everything from `agegrp` to `piat` and store the variable names in a new variable called "key" while the actual values those variables took on go in a variable called "value". 
+
+```{r}
+temp2 <- temp1 %>%
+  gather(key = "key", value = "value", agegrp:piat)
+```
+
+If you arrange the data by `id`, you can better see what's going on. 
+
+```{r}
+temp3 <- temp2 %>%
+  arrange(id)
+```
+
+Next, I added a helper variable with `mutate()`. What I want is eventually to have "_w1" at the end of all wave 1 variables, "_w2" and the end of all wave 2 variables, and so on. 
+
+```{r}
+temp4 <- temp3 %>%
+  mutate(ind = "w")
+```
+
+I then run a `unite()` function to push together this "w" with the wave number. I don't want them separated by any characters, so I add the argument `sep = ""`. We can get rid of these now, they are dead to you, so also add 'remove = TRUE`.
+
+```{r}
+temp5 <- temp4 %>%
+  unite(col = "foo", ind, wave, sep = "", remove = TRUE)
+```
+
+We also unite the `key` variable we created in the beginning with out new helper, `foo`.
+
+```{r}
+temp6 <- temp5 %>%
+  unite(col = "variable", key, foo, sep = "_", remove = TRUE)
+```
+
+And for the grad finale we spread all the the values, based on the variables. 
+
+```{r}
+PIAT_wide <- temp6 %>%
+  spread(key = "variable", value = "value")
+```
+
+
+***
+
+[Back to schedule](index.html)
+
+***

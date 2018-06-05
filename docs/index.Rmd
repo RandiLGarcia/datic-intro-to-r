@@ -1,6 +1,6 @@
 ---
 title: "DATIC: Introduction to R Workshop"
-author: "Randi L. Garcia"
+author: "Instructor: Randi L. Garcia"
 date: "June 7th and 8th, 2018"
 output:
   html_document:
@@ -15,7 +15,9 @@ output:
 fontsize: 12 pt
 ---
 
- > Workshop location: Gentry 140, 9:00am - 5:00pm.
+ > **Workshop location**: Gentry 140, 9:00am - 5:00pm.  
+ > **Textbook**: [R for Data Science](http://r4ds.had.co.nz/index.html)  
+ > **Teaching Assistant**: Starry Zhou
 
 ***
 
@@ -26,16 +28,17 @@ fontsize: 12 pt
   + Morning Session 9-12
     - [Intro to the RStudio environment, and RMarkdown](Intro_to_R.html)
     - [Intro to packages and descriptive statistics](packages_descriptives.html)
-    - [Making Figures with `ggplot2`](Intro_to_ggplot2.html)
+    - [Making Figures with `ggplot2`](intro_to_ggplot2.html)
   + Lunch 12:00 PM to 1:15 PM 
   + Afternoon Session 1:15-3:30
-    - [Data Manipulation and descriptive statistics with `dplyr`](Intro_to_dplyr.html)
+    - [Data Manipulation and descriptive statistics with `dplyr`](intro_to_dplyr.html)
     - [Correlations, Reliability Test, and Scale Scores](cor_reliability_ttest.html)
+  + Homework  
+    - Download and install [miktex](https://miktex.org/)  
   + Resources for more practice
     - [`dplyr` lab](https://beanumber.github.io/sds192/lab-single_table.html)
     - [`dplyr` lab 2](https://beanumber.github.io/sds192/lab-group_by.html)
-    - [`dplyr` lab 3](https://beanumber.github.io/sds192/lab-join.html)
-    - [`ggplot` lab](https://beanumber.github.io/sds192/lab-ggplot2.html)
+    - [`ggplot` lab](http://www.science.smith.edu/~rgarcia/sds201-S18/labs/data_visualization.html)
     - [`ggplot` colors lab](https://beanumber.github.io/sds192/lab-colorbrewer-ggthemes.html)
 
 ***
@@ -43,9 +46,9 @@ fontsize: 12 pt
 ##[Day 2: Data Analysis in R](Day 2 Slides.pdf)
 
   + Morning Session 9-12
-    - [Data Restructuring with `tidyr`](Data_manipulation_with_tidyr.html)
+    - [Data Restructuring with `tidyr`](Restructuring_with_tidyr.html)
     - [ANOVA, Regression, and Logistic regression](ANOVA_and_regression.html)
-    - Preparing [APA style manuscripts](Papaja.pdf) in R Markdown with `papaja`
+    - Preparing [APA style manuscripts](ReproducibleAPAstyle.pdf) in R Markdown with `papaja`
   + Lunch 12:00 PM to 1:15 PM  
   + Afternoon Session 1:15-3:30
     - [Exploratory Factor Analysis (EFA)](Exploratory_Factor_Analysis.html)
@@ -59,12 +62,10 @@ fontsize: 12 pt
 
 #Cheatsheets, R Tutorials, and Books
 
-  + [dplyr cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-  + [ggplot2 cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)
-  + [RMarkdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf) 
+  + [dplyr cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+  + [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+  + [RMarkdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf) 
       - [Advanced RMarkdown](http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html)
-  + [ggplot2 book by Hadley Wickham](http://ms.mcmaster.ca/~bolker/misc/ggplot2-book.pdf)
-  + [R for Data Science by Garrett Grolemund](http://r4ds.had.co.nz/index.html)
 
 
 

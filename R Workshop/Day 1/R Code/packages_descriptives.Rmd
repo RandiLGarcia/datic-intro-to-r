@@ -1,15 +1,15 @@
 ---
 title: "R packages and Descriptive Statistics"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: 3
   html_document:
     highlight: pygments
     theme: cerulean
     toc: yes
     toc_depth: 3
     toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: 3
   word_document:
     toc: yes
     toc_depth: '3'
@@ -19,6 +19,11 @@ fontsize: 12 pt
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
 ```
+***
+
+[Back to schedule](index.html)
+
+***
 
 #Installing Packages 
 
@@ -101,5 +106,9 @@ corr.test(acitelli[which(acitelli$gender==-1),c(-3)])$r
 
 Don't worry, the `tidyverse` to the rescue. 
 
+***
 
+[Back to schedule](index.html)
+
+***
 

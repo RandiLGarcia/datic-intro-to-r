@@ -1,24 +1,28 @@
 ---
 title: "Exploratory Factor Analysis"
 output:
-  word_document:
-    toc: yes
-    toc_depth: '3'
-  pdf_document:
-    toc: yes
-    toc_depth: 3
   html_document:
     highlight: pygments
     theme: cerulean
     toc: yes
     toc_depth: 3
     toc_float: yes
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  pdf_document:
+    toc: yes
+    toc_depth: 3
 fontsize: 12 pt
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
 ```
+
+***
+
+[Back to schedule](index.html)
 
 ***
 
@@ -134,4 +138,8 @@ fa.diagram(pca)
 
 Things look pretty similar with PCA, this is typical, but I would recommend using Principal Axis Factoring, `fm = "pa"`. Read more about this is Preacher & Maccallum (2003). 
 
+***
 
+[Back to schedule](index.html)
+
+***
