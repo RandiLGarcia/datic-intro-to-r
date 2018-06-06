@@ -29,17 +29,17 @@ fontsize: 12 pt
     - [Intro to the RStudio environment, and RMarkdown](Intro_to_R.html)
     - [Intro to packages and descriptive statistics](packages_descriptives.html)
     - [Making Figures with `ggplot2`](Intro_to_ggplot2.html)  
-  + Lunch 12:00 PM to 1:15 PM 
+  + Lunch 12:00 PM to 1:15 PM
   + Afternoon Session 1:15-3:30
     - [Data Manipulation and descriptive statistics with `dplyr`](Intro_to_dplyr.html)  
     - [Correlations, Reliability Test, and Scale Scores](cor_reliability_ttest.html)
-  + Homework  
+  + Homework
     - Download and install [miktex](https://miktex.org/)  
-  + Resources for more practice
-    - [`dplyr` lab](https://beanumber.github.io/sds192/lab-single_table.html)
-    - [`dplyr` lab 2](https://beanumber.github.io/sds192/lab-group_by.html)
+  + [Basic Intro Stats Labs](http://www.science.smith.edu/~rgarcia/sds201-S18/index.html)
+    - [`dplyr` lab](http://www.science.smith.edu/~rgarcia/sds201-S18/labs/intro_to_data.html)
     - [`ggplot` lab](http://www.science.smith.edu/~rgarcia/sds201-S18/labs/data_visualization.html)
-    - [`ggplot` colors lab](https://beanumber.github.io/sds192/lab-colorbrewer-ggthemes.html)
+    - [T-tests](http://www.science.smith.edu/~rgarcia/sds201-S18/labs/inf_for_numerical_data.html)
+
 
 ***
 
@@ -53,8 +53,10 @@ fontsize: 12 pt
   + Afternoon Session 1:15-3:30
     - [Exploratory Factor Analysis (EFA)](Exploratory_Factor_Analysis.html)
     - [Confirmatory Factor Analysis (CFA) and SEM with `laavan`](Confirmatory_Factor_Analysis_and_SEM.html)
-  + Resources for more practice
-    - [`tidyr` lab 4](https://beanumber.github.io/sds192/lab-tidy.html)
+  + [Experimental Design Labs](http://www.science.smith.edu/~rgarcia/sds290-S18/index.html) and other resources  
+    - [Multiple Regression](http://www.science.smith.edu/~rgarcia/sds201-S18/labs/multiple_regression.html)
+    - [Two-way ANOVA](http://www.science.smith.edu/~rgarcia/sds290-S18/lectures/09_bf2_inR.Rmd)
+    - [Repeated Measures, Latin Square, and Mixed ANOVA](http://www.science.smith.edu/~rgarcia/sds290-S18/lectures/13_spitplot_design_inR.Rmd)
     - [Factor Analysis with `psych`](factor.pdf)
     - [`lavaan` tutorials](http://lavaan.ugent.be/tutorial/)
 
