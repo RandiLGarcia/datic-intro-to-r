@@ -28,10 +28,10 @@ fontsize: 12 pt
   + Morning Session 9-12
     - [Intro to the RStudio environment, and RMarkdown](Intro_to_R.html)
     - [Intro to packages and descriptive statistics](packages_descriptives.html)
-    - [Making Figures with `ggplot2`](intro_to_ggplot2.html)  
+    - [Making Figures with `ggplot2`](Intro_to_ggplot2.html)  
   + Lunch 12:00 PM to 1:15 PM 
   + Afternoon Session 1:15-3:30
-    - [Data Manipulation and descriptive statistics with `dplyr`](intro_to_dplyr.html)  
+    - [Data Manipulation and descriptive statistics with `dplyr`](Intro_to_dplyr.html)  
     - [Correlations, Reliability Test, and Scale Scores](cor_reliability_ttest.html)
   + Homework  
     - Download and install [miktex](https://miktex.org/)  
