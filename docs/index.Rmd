@@ -1,7 +1,7 @@
 ---
 title: "DATIC: Introduction to R Workshop"
 author: "Instructor: Randi L. Garcia"
-date: "June 7th and 8th, 2018"
+date: "June 21st and 22nd, 2018"
 output:
   html_document:
     highlight: pygments
