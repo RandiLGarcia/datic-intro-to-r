@@ -1,0 +1,69 @@
+---
+title: "Data Restructuring with tidyr"
+output:
+  html_document:
+    highlight: pygments
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+fontsize: 12 pt
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE) #to supress warning messages in all output
+```
+
+***
+
+[Back to schedule](index.html)
+
+***
+# Loading Data From Qualtrics
+
+```{r}
+#install.packages("qualtRics")
+library(qualtRics)
+library(dplyr)
+library(ggplot2)
+library(psych)
+
+registerOptions(api_token="9o8PBSWtorVtXtxJMqNBHBFSiEhHT8eXr4vGOO3e", 
+                root_url="https://smithcollege.qualtrics.com", 
+                useLabels = FALSE)
+
+surveys <- getSurveys() #gets list of surveys
+questions <- getSurveyQuestions(surveyID = surveys$id[8]) #gets questions
+BotanicGarden <- getSurvey(surveyID = surveys$id[8], force_request = TRUE) #actually downloads data
+```
+
+```{r}
+head(BotanicGarden)
+```
+
+
+# Cleaning Qualtrics data
+
+```{r}
+BotanicGarden <- BotanicGarden %>%
+  select(ResponseID, image:Q12_1)
+```
+
+
+Clean data as usual... the `rename()` functions necessary here!
+
+```{r}
+head(BotanicGarden)
+```
+
+***
+
+[Back to schedule](index.html)
+
+***

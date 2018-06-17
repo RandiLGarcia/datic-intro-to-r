@@ -49,6 +49,7 @@ fontsize: 12 pt
     - [Data Restructuring with `tidyr`](Restructuring_with_tidyr.html)
     - [ANOVA, Regression, and Logistic regression](ANOVA_and_regression.html)
     - Preparing [APA style manuscripts](ReproducibleAPAstyle.pdf) in R Markdown with `papaja`
+    - [Downloading data from Qualtrics into R](Downloading_qualtrics_data.html)
   + Lunch 12:00 PM to 1:15 PM  
   + Afternoon Session 1:15-3:30
     - [Exploratory Factor Analysis (EFA)](Exploratory_Factor_Analysis.html)
